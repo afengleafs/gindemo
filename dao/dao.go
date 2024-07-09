@@ -2,6 +2,7 @@ package dao
 
 import (
 	"gindemo/config"
+	"gindemo/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,6 +15,13 @@ func InitDb() *gorm.DB {
 	if db.Error != nil {
 		panic(db.Error.Error())
 	}
+
+	// 初始化数据库中的数据表
+	err1 := db.AutoMigrate(&models.User{})
+	if err1 != nil {
+		panic(err1)
+	}
+
 	return db
 
 }
